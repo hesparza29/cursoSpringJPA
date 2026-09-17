@@ -1,3 +1,11 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# VS Code
+.vscode/
+
 # Compiled class file
 *.class
 
