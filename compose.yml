@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    restart: unless-stopped
+    environment:
+      - 'MYSQL_DATABASE=pizzeria'
+      - 'MYSQL_ROOT_PASSWORD=Admin2919'
+      - 'MYSQL_USER=usrpizzeria'
+      - 'MYSQL_PASSWORD=user.pizzeria.db'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

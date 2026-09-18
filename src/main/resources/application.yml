@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: pizzeria-by-hector
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  servlet:
+    context-path: /platzi-play/api
