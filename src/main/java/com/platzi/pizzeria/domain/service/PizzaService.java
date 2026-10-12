@@ -7,4 +7,6 @@ import com.platzi.pizzeria.domain.dto.PizzaDto;
 public interface PizzaService {
 
     List<PizzaDto> getAll();
+
+    PizzaDto getById(int id);
 }

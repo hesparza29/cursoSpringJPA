@@ -5,6 +5,9 @@ spring:
     name: pizzeria-by-hector
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  devtools:
+    restart:
+      enabled: true
 server:
   servlet:
     context-path: /platzi-pizzeria/api
