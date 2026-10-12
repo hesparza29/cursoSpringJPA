@@ -7,4 +7,4 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   servlet:
-    context-path: /platzi-play/api
+    context-path: /platzi-pizzeria/api
