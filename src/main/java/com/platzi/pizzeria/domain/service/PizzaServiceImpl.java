@@ -78,4 +78,15 @@ public class PizzaServiceImpl implements PizzaService {
         return entity != null ? true : false;
     }
 
+    @Override
+    public void delete(int id) {
+        PizzaEntity entity = this.repository.findById(id).orElse(null);
+
+        if(entity == null) {
+            throw new NoPizzaExistsException(id);
+        }
+
+        this.repository.deleteById(id);
+    }
+
 }

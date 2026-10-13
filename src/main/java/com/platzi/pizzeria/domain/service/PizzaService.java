@@ -16,4 +16,6 @@ public interface PizzaService {
     PizzaDto update(int id, PizzaUpdateDto dto);
 
     boolean isPizzaExists(int id);
+
+    void delete(int id);
 }
