@@ -4,6 +4,8 @@ import org.springframework.data.repository.ListCrudRepository;
 
 import com.platzi.pizzeria.persistence.entity.PizzaEntity;
 
+
 public interface PizzaEntityRepository extends ListCrudRepository<PizzaEntity, Integer> {
 
+    PizzaEntity findByName(String name);
 }

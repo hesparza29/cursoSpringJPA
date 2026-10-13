@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.platzi.pizzeria.domain.dto.PizzaDto;
+import com.platzi.pizzeria.domain.dto.PizzaUpdateDto;
 import com.platzi.pizzeria.domain.exception.NoPizzaExistsException;
+import com.platzi.pizzeria.domain.exception.PizzaAlreadyExistsException;
 import com.platzi.pizzeria.persistence.entity.PizzaEntity;
 import com.platzi.pizzeria.persistence.mapper.PizzaMapper;
 import com.platzi.pizzeria.persistence.repository.PizzaEntityRepository;
@@ -26,7 +28,13 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Override
     public List<PizzaDto> getAll() {
-        return this.mapper.toDto(this.repository.findAll());
+        List<PizzaDto> pizzas = this.mapper.toDto(this.repository.findAll());
+        
+        if(pizzas.isEmpty()) {
+            throw new NoPizzaExistsException();
+        }
+        
+        return pizzas;
     }
 
     @Override
@@ -42,13 +50,25 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Override
     public PizzaDto save(PizzaDto dto) {
+        PizzaEntity entityValidation = this.repository.findByName(dto.nombre());
+
+        if(entityValidation != null) {
+            throw new PizzaAlreadyExistsException(entityValidation.getName());
+        }
+
         PizzaEntity entity = this.mapper.toEntity(dto);
         return this.mapper.toDto(this.repository.save(entity));
     }
     
     @Override
-    public PizzaDto update(PizzaDto dto) {
-        PizzaEntity entity = this.mapper.toEntity(dto);
+    public PizzaDto update(int id, PizzaUpdateDto dto) {
+        PizzaEntity entity = this.repository.findById(id).orElse(null);
+
+        if(entity == null){
+            throw new NoPizzaExistsException(id);
+        }
+        
+        this.mapper.updateEntityToDto(dto, entity);
         return this.mapper.toDto(this.repository.save(entity));
     }
 

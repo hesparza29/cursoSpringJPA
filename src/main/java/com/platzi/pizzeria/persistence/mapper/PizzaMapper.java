@@ -5,8 +5,10 @@ import java.util.List;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import com.platzi.pizzeria.domain.dto.PizzaDto;
+import com.platzi.pizzeria.domain.dto.PizzaUpdateDto;
 import com.platzi.pizzeria.persistence.entity.PizzaEntity;
 
 @Mapper(componentModel = "spring")
@@ -24,5 +26,9 @@ public interface PizzaMapper {
 
     @InheritInverseConfiguration 
     PizzaEntity toEntity(PizzaDto dto);
+
+    @Mapping(source = "precio", target = "price")
+    @Mapping(source = "disponible", target = "available")
+    void updateEntityToDto(PizzaUpdateDto dto, @MappingTarget PizzaEntity entity);
 
 }
