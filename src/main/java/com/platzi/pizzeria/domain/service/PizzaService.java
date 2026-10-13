@@ -9,4 +9,10 @@ public interface PizzaService {
     List<PizzaDto> getAll();
 
     PizzaDto getById(int id);
+
+    PizzaDto save(PizzaDto dto);
+
+    PizzaDto update(PizzaDto dto);
+
+    boolean isPizzaExists(int id);
 }

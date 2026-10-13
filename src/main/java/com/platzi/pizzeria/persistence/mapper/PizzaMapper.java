@@ -2,6 +2,7 @@ package com.platzi.pizzeria.persistence.mapper;
 
 import java.util.List;
 
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,4 +21,8 @@ public interface PizzaMapper {
     PizzaDto toDto(PizzaEntity entity);
     
     List<PizzaDto> toDto(List<PizzaEntity> entities);
+
+    @InheritInverseConfiguration 
+    PizzaEntity toEntity(PizzaDto dto);
+
 }
