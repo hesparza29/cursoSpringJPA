@@ -19,7 +19,7 @@ import com.platzi.pizzeria.domain.service.PizzaService;
 
 
 @RestController
-@RequestMapping("/pizza")
+@RequestMapping("/pizzas")
 public class PizzaController {
 
     private final PizzaService service;
