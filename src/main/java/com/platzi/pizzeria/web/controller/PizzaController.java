@@ -2,6 +2,7 @@ package com.platzi.pizzeria.web.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.platzi.pizzeria.domain.dto.PizzaDto;
 import com.platzi.pizzeria.domain.dto.PizzaUpdateDto;
 import com.platzi.pizzeria.domain.service.PizzaService;
+import com.platzi.pizzeria.persistence.entity.PizzaEntity;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -53,4 +58,22 @@ public class PizzaController {
         this.service.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<PizzaEntity>> allPizzasPage(@RequestParam(defaultValue = "1") int page,
+                                                            @RequestParam(defaultValue = "3") int elements
+        ) {
+        return ResponseEntity.ok(this.service.getAllPage(page, elements));
+    }
+
+    @GetMapping("/page-sort")
+    public ResponseEntity<Page<PizzaEntity>> getMethodName(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "5") int elements,
+                                @RequestParam(defaultValue = "price") String sortColumn,
+                                @RequestParam(defaultValue = "asc") String sortDirection
+        ) {
+        return ResponseEntity.ok(this.service.getByAvailable(page, elements, sortColumn, sortDirection));
+    }
+    
+    
 }
