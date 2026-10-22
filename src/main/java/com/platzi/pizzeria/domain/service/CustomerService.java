@@ -20,4 +20,6 @@ public interface CustomerService {
     boolean isEmailExists(String correo);
 
     void delete(String id);
+
+    CustomerDto getByPhone(String phone);
 }

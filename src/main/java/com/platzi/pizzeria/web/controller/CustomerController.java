@@ -16,6 +16,8 @@ import com.platzi.pizzeria.domain.service.CustomerService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -56,6 +58,10 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
     
+    @GetMapping("/phone/{phone}")
+    public ResponseEntity<CustomerDto> phoneNumber(@PathVariable String phone) {
+        return ResponseEntity.ok(this.service.getByPhone(phone));
+    }
     
     
 }

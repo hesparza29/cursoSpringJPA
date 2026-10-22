@@ -94,5 +94,9 @@ public class CustomerServiceImpl implements CustomerService {
         }
         this.repository.deleteById(id);
     }
+    @Override
+    public CustomerDto getByPhone(String phone) {
+        return this.mapper.toDto(this.repository.findByPhone(phone));
+    }
 
 }
