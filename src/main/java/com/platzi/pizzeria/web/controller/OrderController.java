@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.platzi.pizzeria.persistence.entity.OrderEntity;
 import com.platzi.pizzeria.persistence.projection.OrderSummary;
 import com.platzi.pizzeria.persistence.repository.OrderEntityRepository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 

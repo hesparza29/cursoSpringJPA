@@ -7,8 +7,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.platzi.pizzeria.domain.dto.PizzaDto;
+import com.platzi.pizzeria.domain.dto.PizzaPriceUpdateDto;
 import com.platzi.pizzeria.domain.dto.PizzaUpdateDto;
 import com.platzi.pizzeria.domain.exception.NoPizzaExistsException;
 import com.platzi.pizzeria.domain.exception.PizzaAlreadyExistsException;
@@ -109,6 +111,28 @@ public class PizzaServiceImpl implements PizzaService {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortColumn);
         Pageable pageRequest = PageRequest.of(page, elements, sort);
         return this.repositoryPage.findByAvailableTrue(pageRequest);
+    }
+
+    @Transactional 
+    @Override
+    public void updatePrice(PizzaPriceUpdateDto dto) {
+        
+        if(!isPizzaExists(dto.idPizza())) {
+            throw new NoPizzaExistsException(dto.idPizza());
+        }
+
+        this.repository.updatePrice(dto.price(), dto.idPizza());
+    }
+
+    @Transactional 
+    @Override
+    public void updatePriceSpel(PizzaPriceUpdateDto dto) {
+        
+        if(!isPizzaExists(dto.idPizza())) {
+            throw new NoPizzaExistsException(dto.idPizza());
+        }
+
+        this.repository.updatePrice(dto);
     }
 
 }

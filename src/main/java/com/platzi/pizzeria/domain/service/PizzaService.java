@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.platzi.pizzeria.domain.dto.PizzaDto;
+import com.platzi.pizzeria.domain.dto.PizzaPriceUpdateDto;
 import com.platzi.pizzeria.domain.dto.PizzaUpdateDto;
 import com.platzi.pizzeria.persistence.entity.PizzaEntity;
 
@@ -25,4 +26,8 @@ public interface PizzaService {
     Page<PizzaEntity> getAllPage(int page, int elemets);
 
     Page<PizzaEntity> getByAvailable(int page, int elements, String sortColumn, String sortDirection);
+
+    void updatePrice(PizzaPriceUpdateDto dto);
+
+    void updatePriceSpel(PizzaPriceUpdateDto dto);
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.platzi.pizzeria.domain.dto.PizzaDto;
+import com.platzi.pizzeria.domain.dto.PizzaPriceUpdateDto;
 import com.platzi.pizzeria.domain.dto.PizzaUpdateDto;
 import com.platzi.pizzeria.domain.service.PizzaService;
 import com.platzi.pizzeria.persistence.entity.PizzaEntity;
@@ -39,7 +40,7 @@ public class PizzaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PizzaDto> onePizza(@PathVariable int id) {
+    public ResponseEntity<PizzaDto> onePizza(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.service.getById(id));
     }
 
@@ -75,5 +76,16 @@ public class PizzaController {
         return ResponseEntity.ok(this.service.getByAvailable(page, elements, sortColumn, sortDirection));
     }
     
+    @PutMapping("/update-price")
+    public ResponseEntity<Void> updatePrice(@RequestBody PizzaPriceUpdateDto dto) {
+        this.service.updatePrice(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/update-price-spel")
+    public ResponseEntity<Void> updatePriceSpel(@RequestBody PizzaPriceUpdateDto dto) {
+        this.service.updatePriceSpel(dto);
+        return ResponseEntity.ok().build();
+    }
     
 }
