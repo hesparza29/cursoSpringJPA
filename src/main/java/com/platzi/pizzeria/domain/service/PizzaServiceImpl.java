@@ -113,7 +113,7 @@ public class PizzaServiceImpl implements PizzaService {
         return this.repositoryPage.findByAvailableTrue(pageRequest);
     }
 
-    @Transactional 
+    @Transactional(noRollbackFor = NoPizzaExistsException.class)
     @Override
     public void updatePrice(PizzaPriceUpdateDto dto) {
         

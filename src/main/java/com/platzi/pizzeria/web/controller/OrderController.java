@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.platzi.pizzeria.domain.dto.OrderDto;
 import com.platzi.pizzeria.persistence.entity.OrderEntity;
+import com.platzi.pizzeria.persistence.mapper.OrderMapper;
 import com.platzi.pizzeria.persistence.projection.OrderSummary;
 import com.platzi.pizzeria.persistence.repository.OrderEntityRepository;
 
@@ -21,13 +23,18 @@ public class OrderController {
 
     private final OrderEntityRepository repository;
 
-    public OrderController(OrderEntityRepository repository) {
+    private final OrderMapper mapper;
+
+    public OrderController(OrderEntityRepository repository,
+                            OrderMapper mapper
+    ) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @GetMapping
-    public List<OrderEntity> getMethodName() {
-        return this.repository.findAll();
+    public List<OrderDto> getMethodName() {
+        return this.mapper.toDto(this.repository.findAll());
     }
 
     @GetMapping("/customer/{idCustomer}")
