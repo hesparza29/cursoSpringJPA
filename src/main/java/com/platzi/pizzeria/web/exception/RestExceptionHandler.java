@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.platzi.pizzeria.domain.exception.CustomerAlreadyExistsException;
 import com.platzi.pizzeria.domain.exception.EmailAlreadyExistsException;
 import com.platzi.pizzeria.domain.exception.NoCustomerExistsException;
+import com.platzi.pizzeria.domain.exception.NoOrderExistsException;
 import com.platzi.pizzeria.domain.exception.NoPizzaExistsException;
 import com.platzi.pizzeria.domain.exception.PizzaAlreadyExistsException;
 
@@ -52,6 +53,11 @@ public class RestExceptionHandler {
                             .message(ex.getMessage())
                         .build();
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(NoOrderExistsException.class)
+    public ResponseEntity<Error> handlerException(NoOrderExistsException ex) {
+        return ResponseEntity.badRequest().body(this.buildError("orders-no-exists", ex.getMessage()));
     }
 
     private Error buildError(String type, String message) {

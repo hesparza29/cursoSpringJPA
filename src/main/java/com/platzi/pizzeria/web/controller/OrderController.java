@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.platzi.pizzeria.domain.dto.OrderDto;
-import com.platzi.pizzeria.persistence.entity.OrderEntity;
-import com.platzi.pizzeria.persistence.mapper.OrderMapper;
+import com.platzi.pizzeria.domain.service.OrderService;
 import com.platzi.pizzeria.persistence.projection.OrderSummary;
-import com.platzi.pizzeria.persistence.repository.OrderEntityRepository;
 
 
 
@@ -21,30 +19,26 @@ import com.platzi.pizzeria.persistence.repository.OrderEntityRepository;
 @RequestMapping("/orders")
 public class OrderController {
 
-    private final OrderEntityRepository repository;
+    private final OrderService service;
 
-    private final OrderMapper mapper;
-
-    public OrderController(OrderEntityRepository repository,
-                            OrderMapper mapper
+    public OrderController(OrderService service
     ) {
-        this.repository = repository;
-        this.mapper = mapper;
+        this.service = service;
     }
 
     @GetMapping
-    public List<OrderDto> getMethodName() {
-        return this.mapper.toDto(this.repository.findAll());
+    public ResponseEntity<List<OrderDto>> allOrders() {
+        return ResponseEntity.ok(this.service.allOrders());
     }
 
     @GetMapping("/customer/{idCustomer}")
-    public ResponseEntity<List<OrderEntity>> ordersByCustomer(@PathVariable("idCustomer") String idCustomer) {
-        return ResponseEntity.ok(this.repository.findByCustomer(idCustomer));
+    public ResponseEntity<List<OrderDto>> ordersByCustomer(@PathVariable("idCustomer") String idCustomer) {
+        return ResponseEntity.ok(this.service.ordersByCustomer(idCustomer));
     }
 
     @GetMapping("/order-summary/{idOrder}")
     public ResponseEntity<OrderSummary> orderSummary(@PathVariable("idOrder") int idOrder) {
-        return ResponseEntity.ok(this.repository.findOrderSummary(idOrder));
+        return ResponseEntity.ok(this.service.orderSummary(idOrder));
     }
     
     
