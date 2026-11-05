@@ -11,3 +11,7 @@ spring:
 server:
   servlet:
     context-path: /platzi-pizzeria/api
+
+logging:
+  level:
+    "[org.springframework.security.web]": debug
