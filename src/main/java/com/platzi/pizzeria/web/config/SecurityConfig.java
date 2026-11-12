@@ -21,24 +21,13 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests( expression -> expression
-                .requestMatchers(HttpMethod.GET, "/pizzas/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/pizzas/**").hasAnyRole("ADMIN", "CUSTOMER")
+                .requestMatchers(HttpMethod.POST, "/pizzas/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT).denyAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults());
         return http.build();
-    }
-
-    @Bean 
-    public UserDetailsService memoryUserDetailsService() {
-
-        UserDetails admin = User.builder()
-                                    .username("admin")
-                                    .password(passwordEncoder().encode("admin123"))
-                                    .roles("ADMIN")
-                                .build();
-
-        return new InMemoryUserDetailsManager(admin);
     }
 
     @Bean 
