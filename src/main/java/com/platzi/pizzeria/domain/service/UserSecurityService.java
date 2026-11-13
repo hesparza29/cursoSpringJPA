@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.platzi.pizzeria.persistence.entity.UserEntity;
+import com.platzi.pizzeria.persistence.entity.UserRoleEntity;
 import com.platzi.pizzeria.persistence.repository.UserEntityRepository;
 
 @Service
@@ -24,11 +25,14 @@ public class UserSecurityService implements UserDetailsService {
         UserEntity entity = this.repository.findById(username)
             .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
 
-        
+        String[] roles = entity.getRoles().stream()
+                                .map((UserRoleEntity roleEntity) -> roleEntity.getRole())
+                                .toArray(String[]::new);
+
         return User.builder()
                         .username(entity.getUsername())
                         .password(entity.getPassword())
-                        .roles("ADMIN")
+                        .roles(roles)
                         .accountLocked(entity.isLocked())
                         .disabled(entity.isDisabled())
                     .build();
