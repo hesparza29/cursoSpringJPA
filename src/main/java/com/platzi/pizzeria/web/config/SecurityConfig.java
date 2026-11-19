@@ -20,6 +20,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/pizzas/**").hasAnyRole("ADMIN", "CUSTOMER")
                 .requestMatchers(HttpMethod.POST, "/pizzas/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT).denyAll()
+                .requestMatchers(HttpMethod.GET, "/orders/**").hasAuthority("orders")
+                .requestMatchers(HttpMethod.GET, "/orders/**").hasAnyRole("CUSTOMER")
                 .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults());

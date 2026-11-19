@@ -1,5 +1,9 @@
 package com.platzi.pizzeria.domain.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,10 +36,24 @@ public class UserSecurityService implements UserDetailsService {
         return User.builder()
                         .username(entity.getUsername())
                         .password(entity.getPassword())
-                        .roles(roles)
+                        .authorities(this.getAuthorities(roles))
                         .accountLocked(entity.isLocked())
                         .disabled(entity.isDisabled())
                     .build();
+    }
+
+    private List<SimpleGrantedAuthority> getAuthorities(String[] roles) {
+        
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.length);
+        for (String role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+
+            if(role.equalsIgnoreCase("ADMIN")) {
+                authorities.add(new SimpleGrantedAuthority("orders"));
+            }
+        }
+    
+        return authorities;
     }
 
 }
